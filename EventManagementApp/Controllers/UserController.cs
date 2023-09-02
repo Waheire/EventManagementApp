@@ -77,7 +77,7 @@ namespace EventManagementApp.Controllers
             return Ok(new SuccessResponse(204, res));
         }
 
-        [HttpPut("BuyCourse")]
+        [HttpPut("BookEvent")]
         public async Task<ActionResult<SuccessResponse>> BuyCourse(Guid id, BookEvent buy)
         {
             try

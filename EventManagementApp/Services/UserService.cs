@@ -21,9 +21,18 @@ namespace EventManagementApp.Services
             return "User Created successfully";
         }
 
-        public Task<string> BookEvent(BookEvent bookEvent)
+        public async Task<string> BookEvent(BookEvent bookEvent)
         {
-            throw new NotImplementedException();
+            var user = await _context.Users.Where(x => x.Id == bookEvent.UserId).FirstOrDefaultAsync();
+            var eventItem = await _context.Events.Where(x => x.EventId == bookEvent.EventId).FirstOrDefaultAsync();
+            if (user != null && eventItem != null)
+            {
+                //book event
+                user.Events.Add(eventItem);
+                await _context.SaveChangesAsync();
+                return "Event booked Successfully";
+            }
+            throw new Exception("Invalid Id's");
         }
 
         public async Task<string> DeleteUserAsync(User user)
@@ -47,7 +56,7 @@ namespace EventManagementApp.Services
         {
             _context.Users.Update(user);
             await _context.SaveChangesAsync();
-            return "User Created successfully";
+            return "User Updated successfully";
         }
     }
 }

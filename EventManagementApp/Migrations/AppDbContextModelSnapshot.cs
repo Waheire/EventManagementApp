@@ -69,9 +69,6 @@ namespace EventManagementApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -85,25 +82,37 @@ namespace EventManagementApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
-
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("EventManagementApp.Entities.User", b =>
+            modelBuilder.Entity("EventUser", b =>
                 {
-                    b.HasOne("EventManagementApp.Entities.Event", "Event")
-                        .WithMany("users")
-                        .HasForeignKey("EventId")
+                    b.Property<Guid>("EventsEventId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("usersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EventsEventId", "usersId");
+
+                    b.HasIndex("usersId");
+
+                    b.ToTable("EventUser");
+                });
+
+            modelBuilder.Entity("EventUser", b =>
+                {
+                    b.HasOne("EventManagementApp.Entities.Event", null)
+                        .WithMany()
+                        .HasForeignKey("EventsEventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("EventManagementApp.Entities.Event", b =>
-                {
-                    b.Navigation("users");
+                    b.HasOne("EventManagementApp.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("usersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

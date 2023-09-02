@@ -12,8 +12,7 @@ namespace EventManagementApp.Entities
         public string Password { get; set; }
         public int PhoneNumber { get; set; }
 
-        [ForeignKey("EventId")]
-        public Event Event { get; set; } = new Event();
-        public Guid EventId { get; set; }  
+        public List<Event> Events { get; set; } = new List<Event>();
+        
     }
 }

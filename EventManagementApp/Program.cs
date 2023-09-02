@@ -19,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 //Register custom services --implement dependency injection
 builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddScoped<EventService, EventService>();
 
 //Add Automapper service
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

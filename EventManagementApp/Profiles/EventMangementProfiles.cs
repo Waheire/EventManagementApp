@@ -11,7 +11,12 @@ namespace EventManagementApp.Profiles
         {
             //user
             CreateMap<AddUser, User>().ReverseMap();
-            //CreateMap<UserResponse, User>().ReverseMap();
+            CreateMap<UserResponse, User>().ReverseMap();
+
+            //Event
+            CreateMap<AddEvent, Event>().ReverseMap();
+            CreateMap<EventResponse, Event>().ReverseMap();
+
 
         }
     }
