@@ -1,5 +1,6 @@
 ﻿using EventManagementApp.Entities;
 using EventManagementApp.Request;
+using EventManagementApp.Response;
 
 namespace EventManagementApp.Services.IServices
 {
@@ -18,5 +19,9 @@ namespace EventManagementApp.Services.IServices
         Task<User> GetUserByIdAsync(Guid id);
         //Book for an event
        Task<string> BookEvent(BookEvent bookEvent);
+        //get registred users for an event
+        Task<IEnumerable<GetRegisteredUsers>> GetRegisteredUsersToAnEventAsync();
+        //Get a registred user for an event
+        Task<GetRegisteredUsers> GetRegistredUserToAnEventAsync(Guid id);
     }
 }

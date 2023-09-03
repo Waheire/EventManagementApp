@@ -16,8 +16,6 @@ namespace EventManagementApp.Profiles
             //Event
             CreateMap<AddEvent, Event>().ReverseMap();
             CreateMap<EventResponse, Event>().ReverseMap();
-
-
         }
     }
 }

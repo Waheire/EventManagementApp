@@ -8,7 +8,7 @@ namespace EventManagementApp.Services.IServices
         Task<string> UpdateEventAsync(Event eventItem);
         Task<string> DeleteEventAsync(Event eventItem);
 
-        Task<IEnumerable<Event>> GetAllEventsAsync();
+        Task<IEnumerable<Event>> GetAllEventsAsync(string? name, int? price, string? location);
        
         Task<Event> GetEventByIdAsync(Guid id);
     }

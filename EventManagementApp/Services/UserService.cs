@@ -1,6 +1,7 @@
 ﻿using EventManagementApp.Data;
 using EventManagementApp.Entities;
 using EventManagementApp.Request;
+using EventManagementApp.Response;
 using EventManagementApp.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,47 @@ namespace EventManagementApp.Services
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users.ToListAsync();
+        }
+
+        public async Task<IEnumerable<GetRegisteredUsers>> GetRegisteredUsersToAnEventAsync()
+        {
+            var users =  await _context.Users.Select(i => new GetRegisteredUsers()
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Email = i.Email,
+                PhoneNumber = i.PhoneNumber,
+                Events = i.Events.Select(c => new EventDto()
+                {
+                    EventId = c.EventId,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Location = c.Location,
+                    Ticket = c.Ticket,
+                    BookedEvents = c.users.Count()
+                }).ToList()
+            }).ToListAsync();
+            return users;
+        }
+
+        public async Task<GetRegisteredUsers> GetRegistredUserToAnEventAsync(Guid id)
+        {
+            return await _context.Users.Where(x => x.Id == id).Select(i => new GetRegisteredUsers()
+            {
+                Id = i.Id,
+                Name = i.Name,
+                Email = i.Email,
+                PhoneNumber = i.PhoneNumber,
+                Events = i.Events.Select(c => new EventDto
+                {
+                    EventId = c.EventId,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Location = c.Location,
+                    Ticket = c.Ticket,
+                    BookedEvents = c.users.Count()
+                }).ToList(),
+            }).FirstOrDefaultAsync();
         }
 
         public async Task<User> GetUserByIdAsync(Guid id)

@@ -31,9 +31,9 @@ namespace EventManagementApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EventResponse>>> GetAllEvents()
+        public async Task<ActionResult<IEnumerable<EventResponse>>> GetAllEvents(string? name, int? price, string? location)
         {
-            var response = await _eventService.GetAllEventsAsync();
+            var response = await _eventService.GetAllEventsAsync(name, price, location);
             var events = _mapper.Map<IEnumerable<EventResponse>>(response);
             return Ok(events);
         }

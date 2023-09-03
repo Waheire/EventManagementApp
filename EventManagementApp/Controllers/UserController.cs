@@ -49,6 +49,25 @@ namespace EventManagementApp.Controllers
             return Ok(user);
         }
 
+        //get all registred users for an event or events
+        [HttpGet("booked")]
+        public async Task<ActionResult<IEnumerable<GetRegisteredUsers>>> GetAllUsersRegistered()
+        {
+            var users = await _userService.GetRegisteredUsersToAnEventAsync();
+            return Ok(users);
+        }
+
+        //get a registred user for an event or events
+        [HttpGet("booked/{id}")]
+        public async Task<ActionResult<GetRegisteredUsers>> GetAllUserRegistred(Guid id)
+        {
+            var user = await _userService.GetRegistredUserToAnEventAsync(id);
+            if (user == null)
+            {
+                return BadRequest(new SuccessResponse(404, "user Does not Exist."));
+            }
+            return Ok(user);
+        }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<SuccessResponse>> UpdateUser(Guid id, AddUser UpdatedUser)
@@ -78,7 +97,7 @@ namespace EventManagementApp.Controllers
         }
 
         [HttpPut("BookEvent")]
-        public async Task<ActionResult<SuccessResponse>> BuyCourse(Guid id, BookEvent buy)
+        public async Task<ActionResult<SuccessResponse>> BookEvent(BookEvent buy)
         {
             try
             {
